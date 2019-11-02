@@ -2,5 +2,5 @@
 2.Add function such like send clients local information to server.
 3.Server can receive those information and save as a log file.
 4.Server side can send command to clients.
-5.Clients can run command from server.
+5.Clients can run command from user.
 6.Server side can be viewed by web.
