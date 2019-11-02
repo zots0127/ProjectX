@@ -10,3 +10,10 @@
 先行研究：各服务器厂商质量价格参差不一，不可避免的要使用多家厂商的服务器
 
 目标：对不同厂商的服务器实现统一管理，实时状态监控，，数据实时备份，服务器加解密，
+
+
+Client: Insert log data to database
+
+Server: Host managment web and visiable chart
+
+DB:Host DB
