@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Bt-Panel" uuid="156c66a3-eba4-4ed7-a324-145de5c77d48">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://104.243.30.173:3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="antistudy" uuid="73e7ec65-4947-4d8f-bd3e-fad69b32a9ca">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://140.238.14.51:3306</jdbc-url>
+    </data-source>
+  </component>
+</project>

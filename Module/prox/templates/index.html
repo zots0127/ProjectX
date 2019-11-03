@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <meta charset="utf-8">
+       <title>index</title>
+   </head>
+   <body>
+   <h1>INFO</h1>
+        <table border="1">
+       <thead>
+
+           <th>CID</th>
+           <th>CU</th>
+           <th>MU</th>
+           <th>DI</th>
+           <th>DO</th>
+           <th>NI</th>
+           <th>NO</th>
+           <th>UPT</th>
+           <th>TSP</th>
+
+
+       </thead>
+            <tbody>
+            {% for info in userinfo %}
+                <tr>
+                    <td>{{info.CID}}</td>
+                    <td>{{info.CU}}</td>
+                    <td>{{info.MU}}</td>
+                    <td>{{info.DI}}</td>
+                    <td>{{info.DO}}</td>
+                    <td>{{info.NI}}</td>
+                    <td>{{info.NO}}</td>
+                    <td>{{info.UPT}}</td>
+                    <td>{{info.TSP}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+   </body>
+</html>
