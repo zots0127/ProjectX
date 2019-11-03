@@ -9,7 +9,7 @@ def update():
     cursor = db.cursor()
 
     # SQL 插入语句
-    sql = f"INSERT INTO Clog( \
+    sql = f"INSERT INTO clouds_clog( \
        CID, CU, MU, DI, DO,NI,NO,UPT) \
        VALUES ('1', '{psutil.cpu_percent(interval=None, percpu=False)}',  '{psutil.virtual_memory()[2]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[1]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[0]}', '{psutil.net_io_counters(pernic=False, nowrap=True)[0]}','{psutil.net_io_counters(pernic=False, nowrap=True)[1]}','{psutil.boot_time()}')"
     try:
