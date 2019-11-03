@@ -1,9 +1,9 @@
 import pymysql
 import psutil
-form threading import Timer
-
+from threading import Timer
+db = pymysql.connect("s.antistudy.cn", "666", "antistudy", "666")
 def update():
-    db = pymysql.connect("s.antistudy.cn", "666", "antistudy", "666")
+
 
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
@@ -22,7 +22,7 @@ def update():
         db.rollback()
 
     # 关闭数据库连接
-    db.close()
+
     Timer(10.0, update).start()
 
 update()
