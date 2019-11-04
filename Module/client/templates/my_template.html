@@ -18,14 +18,16 @@
 		//建立axjx所需的json数据
         var app={
             xid:[],
-            ycu:[]
+            ycu:[],
+            ymu:[]
         };
 
         //发送ajax请求
         $(document).ready(function () {
        getData();
        console.log(app.xid);
-       console.log(app.ycu)
+       console.log(app.ycu);
+       console.log(app.ymu);
     });
 
 	//设计画图
@@ -39,6 +41,7 @@
             success:function(data) {
                 app.xid = data.xid;
                 app.ycu = data.ycu;
+                app.ymu = data.ymu;
                 myChart.setOption({
                     title: {
                         text: 'CPU'
@@ -50,13 +53,22 @@
                     xAxis: {
                         data: app.xid
                     },
-                    yAxis: {},
+                    yAxis: {
+                    type: 'value'},
                     //
-                    series: [{
+                    series: [
+                    {
                         name: 'CPU',
-                        type: 'bar',
+                        type: 'line',
                         data: app.ycu
-                    }]
+                    },
+                    {
+                        name:'Memory',
+                        type:'line',
+                        data:app.ymu
+                    }
+
+                    ]
                 })
             },
              error:function (msg) {

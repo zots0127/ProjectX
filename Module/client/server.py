@@ -18,26 +18,24 @@ def my_test():
                                  charset='utf8'
                                  )
     cur=connection.cursor() #游标（指针）cursor的方式操作数据
-    sql='SELECT ID,CU FROM clouds_clog' #sql语句
+    sql='SELECT ID,CU,MU FROM clouds_clog where CID = 7 ' #sql语句
     cur.execute(sql) #execute(query, args):执行单条sql语句。
     shoudaodeshuju=cur.fetchall() #使结果全部可看
-    print(sql)
-    print(shoudaodeshuju)
-    print(cur)
+
     #创建json数据
     xid=[]
     jsonData={}
     ycu=[]
+    ymu=[]
 
     for data in shoudaodeshuju:
         xid.append(data[0])
         ycu.append(data[1])
-
-    #print(xdays)
-    #print(yvalues)
+        ymu.append(data[2])
 
     jsonData['xid']=xid
     jsonData['ycu']=ycu
+    jsonData['ymu']=ymu
 
     #print(jsonData)
     #将json格式转成str，因为如果直接将dict类型的数据写入json会发生报错，因此将数据写入时需要用到该函数。
