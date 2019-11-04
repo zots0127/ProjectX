@@ -1,16 +1,15 @@
 import pymysql
 import psutil
 import subprocess
+import datetime
 import os
 from threading import Timer
 db = pymysql.connect("s.antistudy.cn", "666", "antistudy", "666")
 CID = 1
 def updateresult(CMD,LOGID):
     updateresult =db.cursor()
-
     sqlupdate = f"update cmdrun SET STATU = '1' WHERE cmdrun.LOGID =%s" % LOGID
     rres = os.popen(CMD).readlines()
-    print("123123")
     #resultupdate =f"update cmdrun SET RESULT = %s WHERE cmdrun.LOGIN  =%s" %rres %LOGID
     updateresult.execute(sqlupdate)
     #updateresult.execute(resultupdate)
@@ -44,18 +43,15 @@ def checkcmd():
         db.commit()
     except:
         db.rollback()
-def dbins():
-    print()
-def dbsel():
-    print()
+
 def update():
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
 
     # SQL 插入语句
     sql = f"INSERT INTO clouds_clog( \
-       CID, CU, MU, DI, DO,NI,NO,UPT) \
-       VALUES ('{CID}', '{psutil.cpu_percent(interval=None, percpu=False)}',  '{psutil.virtual_memory()[2]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[1]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[0]}', '{psutil.net_io_counters(pernic=False, nowrap=True)[0]}','{psutil.net_io_counters(pernic=False, nowrap=True)[1]}','{psutil.boot_time()}')"
+       CID, CU, MU,LOAVG, DI, DO,NI,NO) \
+       VALUES ('{CID}', '{psutil.cpu_percent(interval=None, percpu=False)}',  '{psutil.virtual_memory()[2]}','{psutil.getloadavg()[0]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[3]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[2]}', '{psutil.net_io_counters(pernic=False, nowrap=True)[0]}','{psutil.net_io_counters(pernic=False, nowrap=True)[1]}')"
     #sqlupdate = f"update cmdrun SET STATU = '1' WHERE LOGID = '1' " #测试update功能
 
     try:
@@ -72,4 +68,5 @@ def update():
 
     Timer(5.0, update).start()
 
-checkcmd()
+
+update()
