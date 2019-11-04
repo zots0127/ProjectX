@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="cn-zh">
+<head>
+    <meta charset="UTF-8">
+    <title>数据列表</title>
+</head>
+
+<body>
+    <center>
+    <h1>mysql数据列表</h1>
+    <a href="/add/">添加操作</a>
+    <hr>
+    <table border="1px" width="400px">
+        <tr style="text-align:center">
+            <th>LOGID</th>
+            <th>CID</th>
+            <th>CMD</th>
+
+        </tr>
+        {% for i in cmdlist %}
+        <tr style="text-align:center">
+            <td>{{ i.LOGID }}</td>
+            <td>{{ i.CID }}</td>
+            <td>{{ i.CMD }}</td>
+
+            <td><a href="/del?LOGID={{ i.LOGID }}">删除</a> | <a href="/cha?LOGID={{ i.LOGID }}">更改</a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    </center>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>index</title>
+    <title>HOME</title>
     <script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.min.js"></script>
 </head>
@@ -11,21 +11,33 @@
     <div id="main" style="width: 600px;height:400px;"></div>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+        var cpuChart = echarts.init(document.getElementById('main'));
 
 		//建立axjx所需的json数据
         var app={
-            xid:[],
-            ycu:[]
+            id:[],
+            cu:[],
+            mu:[],
+            loavg:[],
+            di:[],
+            do:[],
+            ni:[],
+            no:[],
         };
 
         //发送ajax请求
         $(document).ready(function () {
        getData();
-       console.log(app.xid);
-       console.log(app.ycu)
-    });
+       console.log(app.id);
+       console.log(app.cu);
+       console.log(app.mu);
+       console.log(app.loavg);
+       console.log(app.di);
+       console.log(app.do);
+       console.log(app.ni);
+       console.log(app.no);
 
+    });
 	//设计画图
     function getData() {
          $.ajax({
@@ -34,21 +46,25 @@
             type:'POST',
             async:false,
             dataType:'json',
-            success:function(data) {
-                app.xid = data.xid;
-                app.ycu = data.ycu;
-                myChart.setOption({
+             success:function(data) {
+                app.id = data.id;
+                app.cu = data.cu;
+                app.mu = data.mu;
+
+                cpuChart.setOption({
                     title: {
-                        text: 'CPU'
+                        text: 'INFO'
                     },
                     tooltip: {},
                     legend: {
-                        data:['CPU']
+                        data:['CPU','Memory']
+
                     },
                     xAxis: {
-                        data: app.xid
+                        data: app.id
                     },
-                    yAxis: {},
+                    yAxis: {
+                    },
                     dataZoom: [{
                           type: 'inside',
                           start: 0,
@@ -76,8 +92,24 @@
                         itemStyle: {
                             color: 'rgb(65,200,255)'
                           },
-                        data: app.ycu
-                    }]
+                        data: app.cu
+
+                    },
+                        {
+                        name: 'Memory',
+                        type: 'line',
+                        showSymbol: false,
+                        hoverAnimation: false,
+                        smooth: true,
+                        symbol: 'none',
+                        itemStyle: {
+                            color: 'rgb(255,63,135)'
+                          },
+                        data: app.mu
+
+                    }
+
+                    ]
                 })
             },
              error:function (msg) {
@@ -87,5 +119,6 @@
         })
     }
     </script>
+
 </body>
 </html>
