@@ -6,6 +6,7 @@ import os
 from threading import Timer
 db = pymysql.connect("s.antistudy.cn", "666", "antistudy", "666")
 CID = 1
+CMD = 'ls'
 def updateresult(CMD,LOGID):
     updateresult =db.cursor()
     sqlupdate = f"update cmdrun SET STATU = '1' WHERE cmdrun.LOGID =%s" % LOGID
@@ -68,5 +69,23 @@ def update():
 
     Timer(5.0, update).start()
 
+def updatee():
+    # 使用cursor()方法获取操作游标
+    cursor = db.cursor()
 
-update()
+    # SQL 插入语句
+    sql = f"INSERT INTO cmdrun (CID, CMD) VALUES ('{CID}', '{CMD}')"
+    #sqlupdate = f"update cmdrun SET STATU = '1' WHERE LOGID = '1' " #测试update功能
+
+    try:
+        # 执行sql语句
+        cursor.execute(sql)
+        #cursor.execute(sqlupdate)
+        # 执行sql语句
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
+
+    # 关闭数据库连接
+updatee()

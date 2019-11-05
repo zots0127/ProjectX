@@ -7,6 +7,11 @@ app = Flask(__name__)
 def my_tem():
     #在浏览器上渲染my_templaces.html模板
     return render_template('my_template.html')
+@app.route('/a')
+def my_tems():
+    #在浏览器上渲染my_templaces.html模板
+    return render_template('my_teplate.html')
+
 @app.route('/test',methods=['POST'])
 def my_test():
 	#创建连接数据库
@@ -49,4 +54,5 @@ def my_test():
 if __name__ == "__main__":
     #运行项目
     #my_test() #测试
-    app.run(debug = True) #整个项目的运行
+    #app.run(debug = True) #整个项目的运行
+    app.run(host='0.0.0.0',port=5000)
