@@ -96,7 +96,6 @@ def ad():
 # 接受添加的数据,写入数据库----增
 @app.route ("/adds/",methods=["POST"])  # 注意post大写,因为post是通过form.data传数据所以下面用request.form
 def updatee():
-    # 使用cursor()方法获取操作游标
     data = dict(request.form)
     CID = data['CID']
     CMD = data['CMD']
@@ -104,9 +103,9 @@ def updatee():
     sql = f"INSERT INTO cmdrun (CID, CMD) VALUES ('{CID}', '{CMD}')"
     res = func (sql ,m='w')
     if res:
-        return '<script>alert("添加成功");location.href="/sql";</script>'
+        return '<script>alert("Add successfull");location.href="/sql";</script>'
     else:
-       return '<script>alert("添加失败");location.href="/sql";</script>'
+       return '<script>alert("Add failed");location.href="/sql";</script>'
 
 # 返回到更改界面
 @app.route ('/cha')
@@ -122,9 +121,9 @@ def chas():
     data = dict (request.form)
     res = func ("update cmdrun set CID='{CID}',CMD='{CMD}' where CID={CID}".format (**data),m='w')
     if res:
-        return '<script>alert("更新成功");location.href="/sql";</script>'
+        return '<script>alert("Updated successfully");location.href="/sql";</script>'
     else:
-        return '<script>alert("未更新");location.href="/sql";</script>'
+        return '<script>alert("Updated failed");location.href="/sql";</script>'
 
 
 # 删除数据----删
@@ -133,9 +132,9 @@ def de():
     LOGID = request.args.get ('LOGID')
     res = func (f'delete from cmdrun where LOGID={LOGID}',m='w')
     if res:
-        return '<script>alert("删除成功");location.href="/sql";</script>'
+        return '<script>alert("Deleted successfully");location.href="/sql";</script>'
     else:
-        return '<script>alert("删除失败");location.href="/sql";</script>'
+        return '<script>alert("Delete failed");location.href="/sql";</script>'
 
 
 
