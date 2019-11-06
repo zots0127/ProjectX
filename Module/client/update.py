@@ -30,7 +30,7 @@ def checkcmd():
 
     sqlc = f"select LOGID,CMD from cmdrun where CID = %s and STATU = '0' " %(CID)
     #获取当CID为本机CID时需要执行的命令以及该命令编号
-    #sqlupdate = f"update cmdrun SET STATU = '1' WHERE LOGID = %s " %LOGID
+
 
     print('准备执行数据库查询命令')
 
@@ -52,18 +52,27 @@ def checkcmd():
                 LOGID = row[0]
 
                 CMD = row[1]
+
             print(type(cresult))
             print('收到新的命令，准备执行')
 
             print('获取执行结果中')
 
-            fanhuizhi = 'fakeresult'
-            print('结果获取成功')
+            cmdresult = os.popen(CMD)
 
+
+
+            fanhuizhi = cmdresult.read()
+            print(type(fanhuizhi))
+            print('结果获取成功')
+            statusdate = f"update cmdrun SET STATU = '1' WHERE LOGID = %s " % LOGID
+            youbiao.execute(statusdate)
             #os.popen(CMD).readlines()[0]
             print('准备上传结果到数据库')
 
-            #print(os.popen(CMD)[0])
+
+
+
 
             resultupdate = f"update cmdrun SET RESULT = '%s' WHERE LOGID = '%s' " %(fanhuizhi,LOGID)
 
@@ -88,7 +97,9 @@ def checkcmd():
         db.rollback()
 #检查新命令
 def update():
+
     checkcmd()
+    #检查新命令
     cursor = db.cursor()
 
     sql = f"INSERT INTO clouds_clog( CID, CU, MU,LOAVG, DI, DO,NI,NO) VALUES ('{CID}', '{psutil.cpu_percent(interval=None, percpu=False)}',  '{psutil.virtual_memory()[2]}','{psutil.getloadavg()[0]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[3]}',  '{psutil.disk_io_counters(perdisk=False, nowrap=True)[2]}', '{psutil.net_io_counters(pernic=False, nowrap=True)[0]}','{psutil.net_io_counters(pernic=False, nowrap=True)[1]}')"
@@ -106,6 +117,7 @@ def update():
         db.rollback()
 
     # 关闭数据库连接
+    print('Print IS Only For Test')
     print(time.asctime( time.localtime(time.time()) ))
     print('已更新服务器状态到数据库\n\n\n')
     Timer(30.0, update).start()
