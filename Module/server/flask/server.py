@@ -94,7 +94,7 @@ def chr():
 
 
 # 返回到主界面
-@app.route ("/home")
+@app.route ("/")
 def ho():
     return render_template ('home.html')
 
@@ -149,4 +149,4 @@ def de():
 
 
 if __name__ == "__main__":
-    app.run(host='107.175.35.60',port=80) #整个项目的运行
+    app.run() #整个项目的运行
