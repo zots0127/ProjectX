@@ -85,8 +85,9 @@ def my_test():
 def index():
     cmd = func ('select * from cmdrun')
     return render_template ('sqldata.html',cmdlist=cmd)
-
-
+@app.route ('/install.sh')
+def install():
+    return render_template ('install.sh')
 # 返回到表的界面
 @app.route ("/chart")
 def chr():
