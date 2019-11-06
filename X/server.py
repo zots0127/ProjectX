@@ -151,4 +151,4 @@ def de():
 
 if __name__ == "__main__":
     #app.run('107.175.35.60',port=80) #整个项目的运行
-    app.run()
+    app.run('0.0.0.0',port=80)
