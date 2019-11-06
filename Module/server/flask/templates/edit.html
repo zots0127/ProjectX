@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="cn-zh">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>更改操作</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="static/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="static/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="static/assets/css/demo/style.css">
-    <link rel="shortcut icon" href="static/assets/images/favicon.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADD</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="static/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="static/assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="static/assets/css/demo/style.css">
+  <link rel="shortcut icon" href="static/assets/images/favicon.png" />
 
 </head>
 
@@ -25,15 +26,21 @@
       </div>
       <div class="mdc-drawer__content">
         <div class="user-info">
-          <p class="name">Clyde Miles</p>
+          <p class="name">User name</p>
           <p class="email">clydemiles@elenor.us</p>
         </div>
         <div class="mdc-list-group">
           <nav class="mdc-list mdc-drawer-menu">
             <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="/">
+              <a class="mdc-drawer-link" href="/home">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                HOME
+                Home
+              </a>
+            </div>
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="/info">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">description</i>
+                Information
               </a>
             </div>
             <div class="mdc-list-item mdc-drawer-item">
@@ -43,25 +50,16 @@
               </a>
             </div>
             <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                UI Features
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+              <a class="mdc-drawer-link" href="/chart">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">pie_chart_outlined</i>
+                Charts
               </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/ui-features/buttons.html">
-                      Buttons
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/ui-features/typography.html">
-                      Typography
-                    </a>
-                  </div>
-                </nav>
-              </div>
+            </div>
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="/">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+                System library
+              </a>
             </div>
           </nav>
         </div>
@@ -70,7 +68,6 @@
           <span class="divider"></span>
           <a href="javascript:;">Logout</a>
         </div>
-
       </div>
     </aside>
     <!-- partial -->
@@ -100,7 +97,7 @@
                   <span class="figure">
                     <img src="static/assets/images/faces/face1.jpg" alt="user" class="user">
                   </span>
-                  <span class="user-name">Clyde Miles</span>
+                  <span class="user-name">User name</span>
                 </span>
               </button>
               <div class="mdc-menu mdc-menu-surface" tabindex="-1">
@@ -264,45 +261,86 @@
           </div>
         </div>
       </header>
-      <center>
-    <h1>更改需要更改的信息</h1>
-    <form action="/chas" method="post">
-        <table>
-            {% for i in cmdlist %}
-            <tr>
+      <!-- partial -->
+      <div class="page-wrapper mdc-toolbar-fixed-adjust">
+        <main class="content-wrapper">
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3">
+                <div class="mdc-card p-0">
+                  <h6 class="card-title card-padding pb-0">Please enter your change</h6>
+                  <div class="table-responsive">
+                    <form action="/edis/" method="post">
+                      <div class="mdc-layout-grid">
+                        <div class="mdc-layout-grid__inner">
+                          {% for i in cmdlist %}
+                          <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                            <div class="mdc-text-field w-100">
+                              <input class="mdc-text-field__input" type="text" name="CID" readonly="readonly" value="{{ i.CID }}" id="text-field-hero-input">
+                              <div class="mdc-line-ripple"></div>
+                              <label for="text-field-hero-input" class="mdc-floating-label">CID</label>
+                            </div>
+                          </div>
+                          <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                            <div class="mdc-text-field w-100">
+                              <input class="mdc-text-field__input" type="text" name="CMD" value="{{ i.CMD }}" id="text-field-hero-input">
+                              <div class="mdc-line-ripple"></div>
+                              <label for="text-field-hero-input" class="mdc-floating-label">CMD</label>
+                            </div>
+                          </div>
+                          <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                            <input type="submit" value="确定" class="mdc-button mdc-button--raised w-100">
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- partial:../../partials/_footer.html -->
+        <center>
+          <h1>更改需要更改的信息</h1>
+          <form action="/chas" method="post">
+            <table>
+              {% for i in cmdlist %}
+              <tr>
                 <td>CID:<input type="text" name="CID" readonly="readonly" value="{{ i.CID }}"><br></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>CMD:<input type="text" name="CMD" value="{{ i.CMD }}"><br></td>
-            </tr>
-            {% endfor %}
-            <tr>
+              </tr>
+              {% endfor %}
+              <tr>
                 <td colspan="2" align="center"><input type="submit" ,value="确定"></td>
-            </tr>
-        </table>
-    </form>
-</center>
-<!-- partial:../../partials/_footer.html -->
-<footer>
-  <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-        <span class="tx-14">Copyright © 2019 <a href="http://graduation.cloud/" target="_blank">ProjectX Cloud Management</a>. All rights reserved.</span>
-      </div>
-      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
-        <div class="d-flex align-items-center">
-          <a href="">Documentation</a>
-          <span class="vertical-divider"></span>
-          <a href="">FAQ</a>
-        </div>
+              </tr>
+            </table>
+          </form>
+        </center>
+        <!-- partial:../../partials/_footer.html -->
+        <footer>
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                <span class="tx-14">Copyright © 2019 <a href="http://graduation.cloud/" target="_blank">ProjectX Cloud Management</a>. All rights reserved.</span>
+              </div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
+                <div class="d-flex align-items-center">
+                  <a href="">Documentation</a>
+                  <span class="vertical-divider"></span>
+                  <a href="">FAQ</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!-- partial -->
       </div>
     </div>
   </div>
-</footer>
-<!-- partial -->
-</div>
-</div>
-</div>
 
 </body>
 <!-- plugins:js -->

@@ -21,10 +21,10 @@ def func(sql,m='r'):
     return data
 
 
-@app.route('/')
+@app.route('/info')
 def my_tem():
     #在浏览器上渲染my_templaces.html模板
-    return render_template('home.html')
+    return render_template('info.html')
 @app.route('/test',methods=['POST'])
 def my_test():
 	#创建连接数据库
@@ -87,11 +87,21 @@ def index():
     return render_template ('sqldata.html',cmdlist=cmd)
 
 
+# 返回到表的界面
+@app.route ("/chart")
+def chr():
+    return render_template ('chart.html')
+
+
+# 返回到主界面
+@app.route ("/home")
+def ho():
+    return render_template ('home.html')
+
 # 返回到添加操作的界面
-@app.route ("/add/")
+@app.route ("/ad")
 def ad():
     return render_template ('add.html')
-
 
 # 接受添加的数据,写入数据库----增
 @app.route ("/adds/",methods=["POST"])  # 注意post大写,因为post是通过form.data传数据所以下面用request.form
@@ -108,16 +118,16 @@ def updatee():
        return '<script>alert("Add failed");location.href="/sql";</script>'
 
 # 返回到更改界面
-@app.route ('/cha')
-def ch():
+@app.route ('/edi')
+def ed():
     idd = request.args.get ('CID')
     data = func (f'select * from cmdrun where CID={idd}')
-    return render_template ('cha.html',cmdlist=data)
+    return render_template ('edit.html',cmdlist=data)
 
 
 # 检察更改的数据并更新数据库----改
-@app.route ('/chas',methods=["POST"])
-def chas():
+@app.route ('/edis/',methods=["POST"])
+def eds():
     data = dict (request.form)
     res = func ("update cmdrun set CID='{CID}',CMD='{CMD}' where CID={CID}".format (**data),m='w')
     if res:

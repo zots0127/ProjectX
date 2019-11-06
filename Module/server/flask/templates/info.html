@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="cn-zh">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CMD EDITOR</title>
-  <!-- plugins:css -->
   <link rel="stylesheet" href="static/assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="static/assets/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="static/assets/css/demo/style.css">
   <link rel="shortcut icon" href="static/assets/images/favicon.png" />
-  <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css">
-  <link rel="stylesheet" href="/path/to/styles/default.css">
 
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>INFO</title>
+  <script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.min.js"></script>
 </head>
 
 <body>
@@ -80,7 +78,7 @@
         <div class="mdc-top-app-bar__row">
           <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-            <span class="mdc-top-app-bar__title">ProjectX!</span>
+            <span class="mdc-top-app-bar__title">Greetings Clyde!</span>
             <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
               <i class="material-icons mdc-text-field__icon">search</i>
               <input class="mdc-text-field__input" id="text-field-hero-input">
@@ -266,38 +264,150 @@
       </header>
       <!-- partial -->
       <div class="page-wrapper mdc-toolbar-fixed-adjust">
+
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
         <main class="content-wrapper">
           <div class="mdc-layout-grid">
             <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
-                <div class="mdc-card p-0">
-                  <h6 class="card-title card-padding pb-3">Command Excute</h6>
-                  <div class="table-responsive">
-                    <a href="/ad" class="mdc-button mdc-button--unelevated filled-button--info">Add</a>
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th class="text-left">LOGID</th>
-                          <th class="text-left">CID</th>
-                          <th class="text-left">CMD</th>
-                          <th class="text-left">Result</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for i in cmdlist %}
-                        <tr>
-                          <td class="text-left">{{ i.LOGID }}</td>
-                          <td class="text-left">{{ i.CID }}</td>
-                          <td class="text-left">{{ i.CMD }}</td>
-                          <td class="text-left">
-                            <pre><code class="Far">{{ i.RESULT }}</code></pre>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">INFO</h6>
+                  <div id="main" style="width: 600px;height:400px;"></div>
+                  <script type="text/javascript">
+                    // 基于准备好的dom，初始化echarts实例
+                    var cpuChart = echarts.init(document.getElementById('main'));
 
-                          </td>
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
+                    //建立axjx所需的json数据
+                    var app = {
+                      id: [],
+                      cu: [],
+                      mu: [],
+                      loavg: [],
+                      di: [],
+                      do: [],
+                      ni: [],
+                      no: [],
+                    };
+
+                    //发送ajax请求
+                    $(document).ready(function() {
+                      getData();
+                      console.log(app.id);
+                      console.log(app.cu);
+                      console.log(app.mu);
+                      console.log(app.loavg);
+                      console.log(app.di);
+                      console.log(app.do);
+                      console.log(app.ni);
+                      console.log(app.no);
+
+                    });
+                    //设计画图
+                    function getData() {
+                      $.ajax({
+                        url: '/test',
+                        data: {},
+                        type: 'POST',
+                        async: false,
+                        dataType: 'json',
+                        success: function(data) {
+                          app.id = data.id;
+                          app.cu = data.cu;
+                          app.mu = data.mu;
+
+                          cpuChart.setOption({
+                            tooltip: {},
+                            legend: {
+                              data: ['CPU', 'Memory']
+                            },
+                            xAxis: {
+                              data: app.id
+                            },
+                            yAxis: {},
+                            dataZoom: [{
+                              type: 'inside',
+                              start: 0,
+                              end: 9999
+                            }, {
+                              start: 0,
+                              end: 10,
+                              handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                              handleSize: '80%',
+                              handleStyle: {
+                                color: '#fff',
+                                shadowBlur: 3,
+                                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                shadowOffsetX: 2,
+                                shadowOffsetY: 2
+                              }
+                            }],
+                            series: [{
+                                name: 'CPU',
+                                type: 'line',
+                                showSymbol: false,
+                                hoverAnimation: false,
+                                smooth: true,
+                                symbol: 'none',
+                                itemStyle: {
+                                  color: 'rgb(65,200,255)'
+                                },
+                                data: app.cu
+
+                              },
+                              {
+                                name: 'Memory',
+                                type: 'line',
+                                showSymbol: false,
+                                hoverAnimation: false,
+                                smooth: true,
+                                symbol: 'none',
+                                itemStyle: {
+                                  color: 'rgb(255,63,135)'
+                                },
+                                data: app.mu
+
+                              }
+
+                            ]
+                          })
+                        },
+                        error: function(msg) {
+                          console.log(msg);
+                          alert('系统发生错误');
+                        }
+                      })
+                    }
+                  </script>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">Bar chart</h6>
+                  <canvas id="barChart"></canvas>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">Area chart</h6>
+                  <canvas id="areaChart"></canvas>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">Doughnut chart</h6>
+                  <canvas id="doughnutChart"></canvas>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">Pie chart</h6>
+                  <canvas id="pieChart"></canvas>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-card">
+                  <h6 class="card-title">Scatter chart</h6>
+                  <canvas id="scatterChart"></canvas>
                 </div>
               </div>
             </div>
@@ -308,7 +418,7 @@
           <div class="mdc-layout-grid">
             <div class="mdc-layout-grid__inner">
               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                <span class="tx-14">Copyright © 2019 <a href="http://graduation.cloud/" target="_blank">ProjectX Cloud Management</a>. All rights reserved.</span>
+                <span class="tx-14">Copyright © 2019 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
               </div>
               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
                 <div class="d-flex align-items-center">
@@ -324,16 +434,13 @@
       </div>
     </div>
   </div>
-
+  <!-- plugins:js -->
+  <script src="static/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="static/assets/js/material.js"></script>
+  <script src="static/assets/js/misc.js"></script>
+  <script src="static/assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="static/assets/js/chartjs.js"></script>
+  <!-- End custom js for this page-->
 </body>
-<!-- plugins:js -->
-<script src="static/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="static/assets/js/material.js"></script>
-<script src="static/assets/js/misc.js"></script>
-<script src="http://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
-<script src="/path/to/highlight.pack.js"></script>
-<script>
-  hljs.initHighlightingOnLoad();
-</script>
 
 </html>
