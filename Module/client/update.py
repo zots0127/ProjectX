@@ -32,18 +32,18 @@ def checkcmd():
     #获取当CID为本机CID时需要执行的命令以及该命令编号
 
 
-    print('准备执行数据库查询命令')
+    print('Check new commad')
 
     try:
         youbiao.execute(sqlc)
         #执行查询命令
-        print('执行命令成功，判断获取结果是否为空')
+        print('Check New Command from Main Server')
         emptytuple = ()
         cresult = youbiao.fetchall()
         #获取查询到的所有数据
         if cresult is emptytuple:
             #判断是否有新命令（判断元组是否为空）
-            print('没有收到新的命令')
+            print('No New Command')
 
         else:
 
@@ -54,9 +54,13 @@ def checkcmd():
                 CMD = row[1]
 
             print(type(cresult))
-            print('收到新的命令，准备执行')
+            statusdate = f"update cmdrun SET STATU = '1' WHERE LOGID = %s " % LOGID
+            youbiao.execute(statusdate)
+            print('Command Status Update')
+            db.commit()
+            print('New Command Received.Running')
 
-            print('获取执行结果中')
+            print('Getting Result')
 
             cmdresult = os.popen(CMD)
 
@@ -64,11 +68,10 @@ def checkcmd():
 
             fanhuizhi = cmdresult.read()
             print(type(fanhuizhi))
-            print('结果获取成功')
-            statusdate = f"update cmdrun SET STATU = '1' WHERE LOGID = %s " % LOGID
-            youbiao.execute(statusdate)
+            print('Get Result')
+
             #os.popen(CMD).readlines()[0]
-            print('准备上传结果到数据库')
+
 
 
 
@@ -78,17 +81,16 @@ def checkcmd():
 
             #执行完命令之后更新返回结果到数据库
 
-            print('上传中')
 
             #youbiao.execute(sqlupdate)
             #更新命令执行状态
             #测试环境不真实执行
 
-            print('任务完成')
+            print('Command run complete.')
 
             youbiao.execute(resultupdate)
             #更新执行结果到数据库
-            print("结束命令")
+            print("Update command result")
 
             db.commit()
             #提交到数据库
@@ -119,7 +121,7 @@ def update():
     # 关闭数据库连接
     print('Print IS Only For Test')
     print(time.asctime( time.localtime(time.time()) ))
-    print('已更新服务器状态到数据库\n\n\n')
-    Timer(30.0, update).start()
+    print('Server Status info Send Success!\n\n\n')
+    Timer(5.0, update).start()
 #更新监控数据
 update()
