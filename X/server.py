@@ -99,8 +99,10 @@ def chr():
 # 返回到主界面
 @app.route ("/")
 def ho():
-    return render_template ('home.html')
-
+    sum = func ('select COUNT(CID) from clouds_client')
+    client = func ('select * from clouds_client')
+    print(type(client))
+    return render_template ('home.html',clientlist=client,sumnum=sum[0])
 # 返回到添加操作的界面
 @app.route ("/ad")
 def ad():
