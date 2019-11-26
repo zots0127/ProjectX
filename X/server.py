@@ -36,11 +36,13 @@ def my_test():
                                  charset='utf8'
                                  )
     cur=connection.cursor() #游标（指针）cursor的方式操作数据
-    sql='SELECT ID,CU,MU,LOAVG,DI,DO,NI,NO FROM clouds_clog WHERE CID=1 order by ID desc LIMIT 100' #sql语句
+    sql='SELECT ID,CU,MU,LOAVG,DI,DO,NI,NO,TSP FROM clouds_clog WHERE CID=1 order by ID desc LIMIT 100' #sql语句
     cur.execute(sql) #execute(query, args):执行单条sql语句。
     data=cur.fetchall() #使结果全部可看
     #创建json数据
-
+    timessss = data[8]
+    print(type(timessss))
+    print(timessss)
     jsonData={}
     id=[]
     cu=[]
@@ -104,9 +106,27 @@ def ho():
 def ad():
     return render_template ('add.html')
 
+@app.route ("/t")
+def onlytestallfucntion():
+    return render_template ('test.html')
+
 # 接受添加的数据,写入数据库----增
 @app.route ("/adds/",methods=["POST"])  # 注意post大写,因为post是通过form.data传数据所以下面用request.form
 def updatee():
+    data = dict(request.form)
+    CID = data['CID']
+    CMD = data['CMD']
+    # SQL 插入语句
+    sql = f"INSERT INTO cmdrun (CID, CMD) VALUES ('{CID}', '{CMD}')"
+    res = func (sql ,m='w')
+    if res:
+        return '<script>alert("Add successfull");location.href="/sql";</script>'
+    else:
+       return '<script>alert("Add failed");location.href="/sql";</script>'
+
+# 返回到更改界面
+@app.route ("/addtest",methods=["POST"])  # 注意post大写,因为post是通过form.data传数据所以下面用request.form
+def updatetest():
     data = dict(request.form)
     CID = data['CID']
     CMD = data['CMD']
@@ -150,5 +170,5 @@ def de():
 
 
 if __name__ == "__main__":
-    app.run('107.175.35.60',port=80) #整个项目的运行
-    #app.run('0.0.0.0',port=80)
+    #app.run('107.175.35.60',port=80) #整个项目的运行
+    app.run()
