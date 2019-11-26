@@ -36,7 +36,7 @@ def my_test():
                                  charset='utf8'
                                  )
     cur=connection.cursor() #游标（指针）cursor的方式操作数据
-    sql='SELECT ID,CU,MU,LOAVG,DI,DO,NI,NO FROM clouds_clog WHERE CID=1' #sql语句
+    sql='SELECT ID,CU,MU,LOAVG,DI,DO,NI,NO FROM clouds_clog WHERE CID=1 order by ID desc LIMIT 100' #sql语句
     cur.execute(sql) #execute(query, args):执行单条sql语句。
     data=cur.fetchall() #使结果全部可看
     #创建json数据
