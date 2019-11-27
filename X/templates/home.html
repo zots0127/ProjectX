@@ -271,11 +271,19 @@
                   <div class="card-inner">
                     <h5 class="card-title">Client Number</h5>
                     <h5 class="font-weight-light pb-2 mb-1 border-bottom">
-                    {% for i in sumnum %}
-                      <tr>
-                        <td class="text-left">{{ sumnum }}</td>
-                      </tr>
-                    {% endfor %}</h5>
+                   <table class="table">
+                      <thead>
+                        <tr>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr>
+                          <td class="text-left">{{ sumnum }}</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
                     <div class="card-icon-wrapper">
                       <i class="material-icons">dvr</i>
                     </div>
@@ -285,9 +293,20 @@
               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
                 <div class="mdc-card info-card info-card--danger">
                   <div class="card-inner">
-                    <h5 class="card-title">Annual Profit</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$1,958,104.00</h5>
-                    <p class="tx-12 text-muted">55% target reached</p>
+                    <h5 class="card-title">Client online</h5>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr>
+                          <td class="text-left">{{ online }}</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
                     <div class="card-icon-wrapper">
                       <i class="material-icons">attach_money</i>
                     </div>
@@ -297,9 +316,20 @@
               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
                 <div class="mdc-card info-card info-card--primary">
                   <div class="card-inner">
-                    <h5 class="card-title">Lead Conversion</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$234,769.00</h5>
-                    <p class="tx-12 text-muted">87% target reached</p>
+                    <h5 class="card-title">Client Offline</h5>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr>
+                          <td class="text-left">{{ offline }}</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
                     <div class="card-icon-wrapper">
                       <i class="material-icons">trending_up</i>
                     </div>

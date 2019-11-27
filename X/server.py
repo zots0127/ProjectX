@@ -99,10 +99,15 @@ def chr():
 # 返回到主界面
 @app.route ("/")
 def ho():
-    sum = func ('select COUNT(CID) from clouds_client')
-    client = func ('select * from clouds_client')
-    print(type(client))
-    return render_template ('home.html',clientlist=client,sumnum=sum[0])
+
+    clientoff = func('select COUNT(STATUS) from clouds_client where STATUS = 0')
+    clienton = func('select COUNT(STATUS) from clouds_client where STATUS = 1')
+    client = func('select * from clouds_client')
+    offline = str(clientoff)[19]
+    online = str(clienton)[19]
+    total =int(online) + int(offline)
+    return render_template ('home.html',clientlist=client,sumnum=total,online=online,offline = offline)
+
 # 返回到添加操作的界面
 @app.route ("/ad")
 def ad():
